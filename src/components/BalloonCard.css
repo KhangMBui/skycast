@@ -1,0 +1,35 @@
+.balloon-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  border: 1px solid rgba(31, 111, 235, 0.12);
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 6px rgba(20, 40, 80, 0.04);
+  margin: 8px 0;
+  width: 100%;
+  max-width: 320px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.balloon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(20, 40, 80, 0.08);
+}
+.balloon-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  color: #0b2545;
+}
+.balloon-card p {
+  margin: 4px 0;
+  color: #16324f;
+  font-size: 0.9rem;
+}
+.balloon-card .meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.balloon-card .meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

@@ -1,0 +1,13 @@
+.map-wrapper {
+  height: 500px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 50, 100, 0.06);
+}
+.map-credit {
+  font-size: 0.8rem;
+  color: #475569;
+  margin-top: 8px;
+}
