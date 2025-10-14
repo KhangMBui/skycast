@@ -57,7 +57,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>🌎 WindBorne Live Balloon Weather Tracker</h1>
+      <h1>🌎🎈 Skycast - WindBorne Live Balloon Weather Tracker</h1>
       <p>
         Tracking real-time balloon positions with live weather data from
         Open-Meteo.

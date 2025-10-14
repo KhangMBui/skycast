@@ -1,11 +1,16 @@
 .balloon-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px; /* increased gap */
   align-items: start;
   margin: 12px 0 28px 0;
+  padding: 0 12px; /* horizontal padding so cards don't touch page edges */
+  width: 100%;
+  justify-items: center; /* center each card in its grid cell */
+  grid-auto-rows: minmax(120px, auto);
 }
 .no-data {
   color: #475569;
   padding: 12px 0;
+  text-align: center;
 }
