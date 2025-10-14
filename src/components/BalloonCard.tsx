@@ -24,20 +24,19 @@ const BalloonCard: React.FC<BalloonCardProps> = ({
         Balloon {id || "Unknown"}
       </h3>
 
-      <div className="meta">
+      <div className="meta coords-row">
         <p className="coords" title={`Lat: ${lat}, Lon: ${lon}`}>
           Lat: {lat.toFixed(2)}°, Lon: {lon.toFixed(2)}°
         </p>
-        <p>Alt: {alt?.toFixed(0)} m</p>
+        <p className="alt">Alt: {alt?.toFixed(0)} m</p>
       </div>
-
       {temperature !== undefined && windspeed !== undefined ? (
-        <div className="meta">
+        <div className="meta stats-row">
           <p className="stat">🌡 {temperature}°C</p>
           <p className="stat">💨 {windspeed} km/h</p>
         </div>
       ) : (
-        <p>No weather data available</p>
+        <p className="no-weather">No weather data available</p>
       )}
     </article>
   );

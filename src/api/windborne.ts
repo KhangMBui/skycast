@@ -76,7 +76,7 @@ async function tryFetchJson(url: string) {
       return json;
     } catch (e) {
       console.warn(
-        `[windborne] failed to parse JSON from ${url} — raw text (first 400 chars):\n`,
+        `Error: ${e}. [windborne] failed to parse JSON from ${url} — raw text (first 400 chars):\n`,
         text.slice(0, 400)
       );
       return null;
@@ -92,8 +92,8 @@ export async function fetchWindborneData(): Promise<BalloonData[]> {
   // - /windborne/... uses Vite dev proxy (dev)
   // - /api/... is for your production server/proxy (same-origin)
   const candidates = [
-    "/windborne/treasure/00.json", // Vite dev proxy -> https://a.windbornesystems.com/treasure/00.json
-    "/api/treasure/00", // production proxy (serverless or backend)
+    "/windborne/treasure/23.json", // Vite dev proxy -> https://a.windbornesystems.com/treasure/00.json
+    "/api/treasure/23", // production proxy (serverless or backend)
   ];
 
   let raw: unknown = null;

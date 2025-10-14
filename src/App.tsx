@@ -20,6 +20,9 @@ function App() {
   const [balloons, setBalloons] = useState<CombinedBalloon[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // selection (Focus Mode)
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   // Pass a stable, memoized array to MapView so it doesn't re-render unnecessarily.
   const mapBalloons = useMemo(
     () =>
@@ -33,6 +36,15 @@ function App() {
     [balloons]
   );
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const wbData = await fetchWindborneData();
+  //     setBalloons(wbData);
+  //     setLoading(false);
+  //     // progressive weather enrichment omitted for brevity...
+  //   })();
+  // }, []);
+
   useEffect(() => {
     (async () => {
       const wbData = await fetchWindborneData(); // full dataset (all parsed balloons)
@@ -40,31 +52,37 @@ function App() {
       // show full list immediately (no weather)
       setBalloons(wbData);
       setLoading(false);
-
-      // progressively fetch weather for all balloons with limited concurrency
+      // progressively fetch weather for each balloon's latest point with limited concurrency
       const CONCURRENCY = 4;
-      const ids = [...wbData];
-      for (let i = 0; i < ids.length; i += CONCURRENCY) {
-        const chunk = ids.slice(i, i + CONCURRENCY);
+      for (let i = 0; i < wbData.length; i += CONCURRENCY) {
+        const chunk = wbData.slice(i, i + CONCURRENCY);
         const results = await Promise.all(
           chunk.map(async (b) => {
-            const w = await fetchWeather(b.lat, b.lon);
-            return { id: b.id, weather: w ?? undefined };
+            try {
+              const w = await fetchWeather(b.lat, b.lon);
+              return { id: b.id, weather: w ?? undefined };
+            } catch {
+              return { id: b.id, weather: undefined };
+            }
           })
         );
 
-        // merge results into current state (preserve other entries)
+        // merge results into current state (only update entries that changed)
         setBalloons((prev) =>
           prev.map((p) => {
             const found = results.find((r) => r.id === p.id);
             return found ? { ...p, weather: found.weather } : p;
           })
         );
-        // optional small delay to be gentle with upstream API
+
+        // gentle delay to avoid spamming the weather API
         await new Promise((r) => setTimeout(r, 250));
       }
     })();
   }, []);
+
+  const handleSelectBalloon = (id: string) => setSelectedId(id);
+  const handleClearSelection = () => setSelectedId(null);
 
   if (loading) return <div className="loading">Loading balloons...</div>;
 
@@ -76,10 +94,20 @@ function App() {
         Open-Meteo.
       </p>
 
-      <MapView balloons={mapBalloons} />
+      <MapView
+        balloons={mapBalloons}
+        selectedId={selectedId}
+        onSelect={handleSelectBalloon}
+        onClearSelection={handleClearSelection}
+      />
 
       <h2>All Balloons</h2>
-      <BalloonList balloons={balloons} />
+      <BalloonList
+        balloons={balloons}
+        pageSize={30}
+        onSelect={handleSelectBalloon}
+        selectedId={selectedId}
+      />
     </div>
   );
 }

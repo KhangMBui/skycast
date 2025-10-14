@@ -13,7 +13,14 @@
   flex-direction: column;
   justify-content: space-between;
 }
-/* ...existing code... */
+
+.balloon-card-wrapper.selected .balloon-card,
+.balloon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(20, 40, 80, 0.08);
+  cursor: pointer;
+}
+
 .balloon-card h3 {
   margin: 0 0 6px 0;
   font-size: 1.05rem;
