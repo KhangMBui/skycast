@@ -11,3 +11,45 @@
   color: #475569;
   margin-top: 8px;
 }
+
+.custom-cluster {
+  background: transparent; /* divIcon wraps .cluster-icon, keep transparent */
+  border: 0;
+  box-shadow: none;
+}
+.cluster-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* fixed size for all clusters */
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 184, 77, 0.92) 0%,
+    rgba(255, 154, 31, 0.92) 100%
+  );
+  color: #0b0b0b;
+  font-weight: 700;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 10px rgba(11, 20, 40, 0.12);
+  line-height: 1;
+  font-size: 12px;
+  opacity: 0.88; /* make semi-transparent */
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* let cluster click hit underlying cluster marker area */
+}
+
+/* ensure cluster text remains centered */
+.cluster-icon span {
+  display: inline-block;
+  transform: translateY(-1px);
+  pointer-events: auto;
+}
+
+/* keep pointer cursor for markers */
+.leaflet-marker-icon,
+.leaflet-marker-pane .leaflet-marker-icon {
+  cursor: pointer;
+}

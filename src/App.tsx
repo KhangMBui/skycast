@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchWindborneData } from "./api/windborne";
 import BalloonList from "./components/BalloonList";
 import MapView from "./components/MapView";
@@ -19,6 +19,19 @@ interface CombinedBalloon {
 function App() {
   const [balloons, setBalloons] = useState<CombinedBalloon[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pass a stable, memoized array to MapView so it doesn't re-render unnecessarily.
+  const mapBalloons = useMemo(
+    () =>
+      balloons.map((b) => ({
+        id: b.id,
+        lat: b.lat,
+        lon: b.lon,
+        alt: b.alt,
+        weather: b.weather,
+      })),
+    [balloons]
+  );
 
   useEffect(() => {
     (async () => {
@@ -63,7 +76,7 @@ function App() {
         Open-Meteo.
       </p>
 
-      <MapView balloons={balloons} />
+      <MapView balloons={mapBalloons} />
 
       <h2>All Balloons</h2>
       <BalloonList balloons={balloons} />
