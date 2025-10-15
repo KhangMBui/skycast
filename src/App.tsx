@@ -3,6 +3,7 @@ import { fetchLast24Hours } from "./api/windborne";
 import BalloonList from "./components/BalloonList";
 import MapView from "./components/MapView";
 import { fetchWeather } from "./api/openMeteo";
+import LoadingModal from "./components/LoadingModal";
 import { type Flight } from "./components/MapView";
 import "./App.css";
 
@@ -214,7 +215,7 @@ function App() {
   const handleSelectBalloon = (id: string) => setSelectedId(id);
   const handleClearSelection = () => setSelectedId(null);
 
-  if (loading) return <div className="loading">Loading balloons...</div>;
+  // if (loading) return <div className="loading">Loading balloons...</div>;
 
   return (
     <div className="App">
@@ -224,6 +225,11 @@ function App() {
         Open-Meteo.
       </p>
 
+      <LoadingModal
+        isVisible={loading}
+        title="Loading balloons..."
+        subtitle="I'm using a free‑tier Render deployment so it might take a bit long — please be patient :)"
+      />
       {!selectedId && (
         <div className="map-instructions" role="note">
           Showing latest balloon locations (one per flight). Click any marker or
@@ -231,7 +237,6 @@ function App() {
           and windspeed. Use "Back to overview" to return.
         </div>
       )}
-
       <MapView
         balloons={mapBalloons}
         selectedId={selectedId}
@@ -239,7 +244,6 @@ function App() {
         onSelect={handleSelectBalloon}
         onClearSelection={handleClearSelection}
       />
-
       <h2>All Balloons</h2>
       <BalloonList
         balloons={balloons}
