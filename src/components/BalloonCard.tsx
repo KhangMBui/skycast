@@ -36,7 +36,9 @@ const BalloonCard: React.FC<BalloonCardProps> = ({
           <p className="stat">💨 {windspeed} km/h</p>
         </div>
       ) : (
-        <p className="no-weather">No weather data available</p>
+        <p className="no-weather">
+          Click to load flight history and weather data
+        </p>
       )}
     </article>
   );

@@ -29,10 +29,11 @@
   text-overflow: ellipsis;
   white-space: nowrap; /* truncate long ids */
 }
+
 .balloon-card p {
   margin: 4px 0;
   color: #16324f;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 /* meta row: allow wrapping so long coords don't overflow */
