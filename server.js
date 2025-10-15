@@ -1,10 +1,26 @@
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
+import path from "path";
 
 const app = express();
 app.use(cors());
 app.disable("x-powered-by");
+
+// Serve built frontend when present (production on Render)
+const distDir = path.join(process.cwd(), "dist");
+app.use(express.static(distDir));
+
+// SPA fallback for client routes
+app.use((req, res, next) => {
+  // allow API routes to continue
+  if (req.path.startsWith("/api/") || req.path.startsWith("/windborne/"))
+    return next();
+  const indexPath = path.join(distDir, "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) next(err);
+  });
+});
 
 const CACHE_TTL_MS = 1000 * 30; // 30s cache for dev; increase for prod
 const cache = new Map();

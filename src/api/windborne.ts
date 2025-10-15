@@ -254,7 +254,7 @@ export async function fetchLast24Hours(): Promise<
   const MATCH_KM = 200;
 
   for (const hh of hours) {
-    const tryUrls = [`/windborne/treasure/${hh}.json`, `/api/treasure/${hh}`];
+    const tryUrls = [`/api/treasure/${hh}`, `/windborne/treasure/${hh}.json`];
 
     let raw: unknown = null;
     for (const u of tryUrls) {
